@@ -1,0 +1,6 @@
+assets/
+yii/
+protected/runtime/
+composer.phar
+merchempires/
+.htaccess
