@@ -4,3 +4,4 @@ protected/runtime/
 composer.phar
 merchempires/
 .htaccess
+.idea/
