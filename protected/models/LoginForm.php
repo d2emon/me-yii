@@ -9,7 +9,7 @@ class LoginForm extends CFormModel
 {
 	public $username;
 	public $password;
-	public $rememberMe;
+    public $error_code;
 
 	private $_identity;
 
@@ -20,14 +20,10 @@ class LoginForm extends CFormModel
 	 */
 	public function rules()
 	{
-		return array(
-			// username and password are required
-			array('username, password', 'required'),
-			// rememberMe needs to be a boolean
-			array('rememberMe', 'boolean'),
-			// password needs to be authenticated
-			array('password', 'authenticate'),
-		);
+		return [
+            ['username, password', 'required'    ],
+            ['password',           'authenticate'],
+        ];
 	}
 
 	/**
@@ -35,22 +31,28 @@ class LoginForm extends CFormModel
 	 */
 	public function attributeLabels()
 	{
-		return array(
-			'rememberMe'=>'Remember me next time',
-		);
+		return [
+            'username'   => 'Username',
+            'password'   => 'Password',
+        ];
 	}
 
 	/**
 	 * Authenticates the password.
 	 * This is the 'authenticate' validator as declared in rules().
 	 */
-	public function authenticate($attribute,$params)
+	public function authenticate($attribute, $params)
 	{
 		if(!$this->hasErrors())
 		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
+			$this->_identity = new UserIdentity($this->username, $this->password);
 			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+            {
+                $this->error_code = $this->_identity->errorCode;
+
+                if($this->error_code !== UserIdentity::ERROR_NONE)
+                    $this->addError($this->errorAttribute, $this->_identity->errorMessage);
+            }
 		}
 	}
 
@@ -65,13 +67,62 @@ class LoginForm extends CFormModel
 			$this->_identity=new UserIdentity($this->username,$this->password);
 			$this->_identity->authenticate();
 		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
+		if($this->_identity->errorCode === UserIdentity::ERROR_NONE)
 		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-			Yii::app()->user->login($this->_identity,$duration);
+			$duration = 3600*24*30; // 30 days
+			Yii::app()->user->login($this->_identity, $duration);
 			return true;
 		}
 		else
 			return false;
 	}
+
+    public function getErrorView()
+    {
+        if($this->error_code == UserIdentity::ERROR_USERNAME_INVALID)
+        {
+            return "//popups/_error_login";
+        }
+        elseif($this->error_code == UserIdentity::ERROR_PASSWORD_INVALID)
+        {
+            return "//popups/_error_login";
+        }
+        elseif($this->error_code == UserIdentity::ERROR_NOT_VALIDATED)
+        {
+            return "//popups/_error_invalid";
+        }
+        elseif($this->error_code == UserIdentity::ERROR_BANNED)
+        {
+            return "//popups/_error_banned";
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public function getErrorAttribute()
+    {
+        if($this->error_code == UserIdentity::ERROR_USERNAME_INVALID)
+        {
+            return 'username';
+        }
+        elseif($this->error_code == UserIdentity::ERROR_PASSWORD_INVALID)
+        {
+            return 'password';
+        }
+        elseif($this->error_code == UserIdentity::ERROR_NOT_VALIDATED)
+        {
+            return 'login';
+        }
+        elseif($this->error_code == UserIdentity::ERROR_BANNED)
+        {
+            return 'login';
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

@@ -5,3 +5,5 @@ composer.phar
 merchempires/
 .htaccess
 .idea/
+composer.lock
+vendor/

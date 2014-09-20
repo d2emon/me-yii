@@ -1,0 +1,7 @@
+{
+	"require" : {
+		"leafo/scssphp":         "dev-master@dev",
+		"leafo/scssphp-compass": "dev-master@dev",
+		"artem-frolov/yii-sass": "1.*"
+	}
+}	

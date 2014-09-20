@@ -1,90 +1,87 @@
 <?php
-
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-return array(
+return [
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'Merchant Empires',
 
-	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>['log'],
 
-	// autoloading model and component classes
-	'import'=>array(
+	'import'=>[
 		'application.models.*',
 		'application.components.*',
-	),
+        'ext.mail.YiiMailMessage',
+	],
 
-	'modules'=>array(
-		// uncomment the following to enable the Gii tool
-		/*
-		'gii'=>array(
+	'modules'=>[
+		'gii'=>[
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'E1kCH6BP',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
-		),
-		*/
-	),
+			//'ipFilters'=>array('127.0.0.1','::1'),
+            'generatorPaths'=>[
+                'bootstrap.gii',
+            ],
+		],
+	],
 
-	// application components
-	'components'=>array(
-		'user'=>array(
-			// enable cookie-based authentication
+    'aliases' => [
+        'vendor' => dirname(__FILE__).'/../../vendor',
+    ],
+
+	'components'=>[
+		'user'=>[
+            'loginUrl'=>'user/login',
 			'allowAutoLogin'=>true,
-		),
-		// uncomment the following to enable URLs in path-format
-		/*
-		'urlManager'=>array(
+		],
+		'urlManager'=>[
 			'urlFormat'=>'path',
-			'rules'=>array(
+			'rules'=>[
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-			),
-		),
-		*/
-		/*
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		// uncomment the following to use a MySQL database
-		*/
-		'db'=>array(
+			],
+            'showScriptName' => false,
+		],
+		'db'=>[
 			'connectionString' => 'mysql:host=localhost;dbname=me',
 			'emulatePrepare' => true,
 			'username' => 'me',
 			'password' => 'e3sM6nJP4bH8pGcQ',
 			'charset' => 'utf8',
-		),
-		'errorHandler'=>array(
-			// use 'site/error' action to display errors
+		],
+		'errorHandler'=>[
 			'errorAction'=>'site/error',
-		),
-		'log'=>array(
+		],
+		'log'=>[
 			'class'=>'CLogRouter',
-			'routes'=>array(
-				array(
+			'routes'=>[
+				[
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
-				),
-				// uncomment the following to show log messages on web pages
-				/*
-				array(
-					'class'=>'CWebLogRoute',
-				),
-				*/
-			),
-		),
-	),
-
-	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
-	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
-	),
-);
+					'levels'=>'error, warning, info',
+				],
+			],
+		],
+        'sass'=>[
+            'class'=>'vendor.artem-frolov.yii-sass.SassHandler',
+            'enableCompass'=>true,
+        ],
+        'bootstrap'=>[
+            'class'=>'bootstrap.components.Bootstrap',
+        ],
+        'mail'=>[
+            'class'=>'ext.mail.YiiMail',
+            'transportType'=>'php',
+            'viewPath'=>'application.views.mail',
+            'logging'=>true,
+            'dryRun'=>false,
+        ]
+    ],
+	'params'=>[
+		'adminEmail'=>'d2emonium@gmail.com',
+	],
+];
