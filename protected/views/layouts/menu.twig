@@ -1,0 +1,39 @@
+{{ void(this.beginContent('//layouts/main')) }}
+{#
+<script>
+bar = new Array();function change(imagename, event) {document [imagename].src = bar[imagename + "-" + event].src;return;}
+function load(prefix, imagename) {bar[imagename + "-off"] = new Image();bar[imagename + "-off"].src = prefix + imagename + "-off.png";bar[imagename + "-on"] = new Image();bar[imagename + "-on"].src = prefix + imagename + "-on.png";return;}
+load("./images/mainmenu/", "currentsector");load("./images/mainmenu/", "localmap");load("./images/mainmenu/", "galaxymap");load("./images/mainmenu/", "merchants");load("./images/mainmenu/", "alliance");load("./images/mainmenu/", "planets");load("./images/mainmenu/", "news");load("./images/mainmenu/", "help");load("./images/mainmenu/", "selectgame");load("./images/mainmenu/", "logoff");load("./images/mainmenu/", "preferences");load("./images/mainmenu/", "view-messages");load("./images/mainmenu/", "send-messages");load("./images/mainmenu/", "current-players");load("./images/mainmenu/", "rankings");load("./images/mainmenu/", "starbase");
+</script>
+#}
+    <aside>
+        <time>{{ "now" | date ("d.m.Y H:i:s") }}</time>
+        <div id="mainmenu">
+            {{ void(this.widget('zii.widgets.CMenu', {
+                'id':    'user-menu',
+                'items': [
+                    {'label': 'Login',       'url': ['/user/login'  ], 'visible':     App.user.isGuest},
+                    {'label': 'Select game', 'url': ['/game/select' ], 'visible': not App.user.isGuest},
+                    {'label': 'Logoff',      'url': ['/user/logout' ], 'visible': not App.user.isGuest},
+                ],
+            })) }}
+            {{ void(this.widget('zii.widgets.CMenu',{
+                'id':    'global-menu',
+                'items': [
+                    {'label': 'Help',        'url': {0:'/site/page', 'view':'help'},                                  },
+                    {'label': 'Preferences', 'url': [  '/site/contact'            ], 'visible': not App.user.isGuest},
+                ],
+            })) }}
+        </div>
+        <!-- mainmenu -->
+
+    </aside>
+    <div id="content">
+        {% if App.user.hasFlash('sys_msg') %}
+            {{ void(this.renderPartial(App.user.getFlash('sys_msg'))) }}
+        {% endif %}
+	    {{ content }}
+    </div>
+    <!-- content -->
+
+{{ void(this.endContent) }}

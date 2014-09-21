@@ -30,9 +30,9 @@ return [
         ],
     ],
 
-    'aliases' => [
+    /*'aliases' => [
         'vendor' => dirname(__FILE__).'/../../vendor',
-    ],
+    ],*/
 
     'components'=>[
         'user'=>[
@@ -62,7 +62,7 @@ return [
             ],
         ],
         'sass'=>[
-            'class'=>'vendor.artem-frolov.yii-sass.SassHandler',
+            'class'=>'application.vendor.artem-frolov.yii-sass.SassHandler',
             'enableCompass'=>true,
         ],
         'bootstrap'=>[
@@ -74,7 +74,24 @@ return [
             'viewPath'=>'application.views.mail',
             'logging'=>true,
             'dryRun'=>false,
-        ]
+        ],
+        'viewRenderer' => [
+            'class' => 'application.vendor.yiiext.twig-renderer.ETwigViewRenderer',
+            'twigPathAlias' => 'application.vendor.twig.twig.lib.Twig',
+
+            'fileExtension' => '.twig',
+            'globals' => [
+                'html' => 'CHtml',
+                'yii'  => 'Yii',
+            ],
+            'functions' => [
+                'rot13' => 'str_rot13',
+            ],
+            'filters' => [
+                'jencode' => 'CJSON::encode',
+                'alias'   => 'Yii::getPathOfAlias',
+            ],
+        ],
 	],
     'params'=>[
         'adminEmail'=>'d2emonium@gmail.com',

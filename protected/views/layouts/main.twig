@@ -1,0 +1,50 @@
+{{
+void(App.sass.register(('application.assets.scss'|alias)~'/main.scss'))
+}}{{
+void(App.clientScript
+    .registerCssFile(App.assetManager.publish(('application.assets.css'|alias)~'/main.css'))
+    .registerCssFile(App.assetManager.publish(('application.assets.css'|alias)~'/form.css')))
+}}{#
+templates/script.js
+#}<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+    <meta name="keywords" content="merchant empires, games, strategy, trade wars, free, open source, play, galaxy, rpg, game, merchants, empire, war" />
+	<title>{{ html.encode(App.name) }}: {{ html.encode(this.pageTitle) }}</title>
+</head>
+
+<body>
+
+<div class="{{ this.background }}">
+	<header>
+		<h1>{{ html.link(App.name, '/') }}</h1>
+        {% if (this.breadcrumbs) %}
+            {{ this.widget('zii.widgets.CBreadcrumbs', {
+                'links': this.breadcrumbs,
+            }) }}
+            <!-- breadcrumbs -->
+        {% endif %}
+
+    </header>
+    <!-- header -->
+
+    <div id="wrapper">
+        {{ content }}
+	</div>
+
+	<div class="clear"></div>
+
+	<footer>
+		Copyright &copy; {{ "now" | date('Y') }} by My Company.<br/>
+		All Rights Reserved.<br/>
+		{{ yii.powered() }}
+	</footer>
+    <!-- footer -->
+
+</div>
+<!-- page -->
+
+</body>
+</html>

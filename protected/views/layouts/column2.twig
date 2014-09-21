@@ -1,0 +1,25 @@
+{{ void(this.beginContent('//layouts/main')) }}
+<div class="span-19">
+	<div id="content">
+		{{ content }}
+	</div>
+    <!-- content -->
+
+</div>
+<div class="span-5 last">
+	<div id="sidebar">
+        {{ void(this.beginWidget('zii.widgets.CPortlet', {
+            'title': 'Operations',
+        })) }}
+        {{ void(this.widget('zii.widgets.CMenu', {
+            'items': this.menu,
+            'htmlOptions': {
+                'class': 'operations'
+            },
+        })) }}
+        {{ void(this.endWidget) }}
+	</div>
+    <!-- sidebar -->
+
+</div>
+{{ void(this.endContent) }}
