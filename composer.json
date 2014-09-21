@@ -1,7 +1,25 @@
 {
-	"require" : {
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "yiiext/twig-renderer",
+				"version": "1.1.15",
+				"source": {
+					"type": "git",
+					"url": "https://github.com/yiiext/twig-renderer",
+					"reference": "v1.1.15"
+				}
+			}
+		}
+	],
+	"require": {
+		"php":                   ">=5.3.0",
+		"yiisoft/yii":           "dev-master",
 		"leafo/scssphp":         "dev-master@dev",
 		"leafo/scssphp-compass": "dev-master@dev",
-		"artem-frolov/yii-sass": "1.*"
+		"artem-frolov/yii-sass": "1.*",
+		"twig/twig":             "1.*",
+		"yiiext/twig-renderer":  "1.1.*"
 	}
 }	
