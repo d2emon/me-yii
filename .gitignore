@@ -1,10 +1,9 @@
-assets/
-yii/
-protected/runtime/
 composer.phar
-merchempires/
-.htaccess
-.idea/
 composer.lock
 vendor/
+.htaccess
+.idea/
+assets/
+protected/runtime/
+merchempires/
 temp/
