@@ -2,20 +2,25 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
-Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
+Yii::setPathOfAlias('user',              'protected/vendor/mishamx/yii-user');
+Yii::setPathOfAlias('sass',              'protected/vendor/artem-frolov/yii-sass');
+Yii::setPathOfAlias('yii-debug-toolbar', 'protected/vendor/malyshev/yii-debug-toolbar');
+Yii::setPathOfAlias('twig-renderer',     'protected/vendor/yiiext/twig-renderer');
+Yii::setPathOfAlias('twig',              'protected/vendor/twig/twig');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return [
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Merchant Empires',
+    'theme'=>'basic',
 
     'preload'=>['log'],
 
     'import'=>[
         'application.models.*',
         'application.components.*',
-        'ext.mail.YiiMailMessage',
+        'ext.mail.*',
     ],
 
     'modules'=>[
@@ -28,16 +33,41 @@ return [
                 'bootstrap.gii',
             ],
         ],
-    ],
+        'user'=>[
+            'class'=>'user.UserModule',
 
-    /*'aliases' => [
-        'vendor' => dirname(__FILE__).'/../../vendor',
-    ],*/
+            # encrypting method (php hash function)
+            'hash' => 'md5',
+
+            # send activation email
+            'sendActivationMail' => true,
+
+            # allow access for non-activated users
+            'loginNotActiv' => false,
+
+            # activate user on registration (only sendActivationMail = false)
+            'activeAfterRegister' => false,
+
+            # automatically login from registration
+            'autoLogin' => false,
+
+            'registrationUrl' => ['/user/registration'],
+            'recoveryUrl'     => ['/user/recovery'],
+            'loginUrl'        => ['/user/login'],
+            'returnUrl'       => ['/user/profile'],
+            'returnLogoutUrl' => ['/user/login'],
+
+            'tableUsers'         => 'users',
+            'tableProfiles'      => 'user_profiles',
+            'tableProfileFields' => 'user_profile_fields',
+        ],
+    ],
 
     'components'=>[
         'user'=>[
-            'loginUrl'=>'user/login',
-            'allowAutoLogin'=>true,
+            // 'loginUrl'=>'user/login',
+            // 'allowAutoLogin'=>true,
+            'class'=>'user.components.WebUser',
         ],
         'urlManager'=>[
             'urlFormat'=>'path',
@@ -57,16 +87,21 @@ return [
             'routes'=>[
                 [
                     'class'=>'CFileLogRoute',
-                    'levels'=>'error, warning, info',
+                    'levels'=>'error, warning, trace',
                 ],
+                [
+                    'class'=>'yii-debug-toolbar.yii-debug-toolbar.YiiDebugToolbarRoute',
+                    'enabled'=>YII_DEBUG,
+                    'levels'=>'error, warning, trace, profile, info',
+                ]
             ],
         ],
         'sass'=>[
-            'class'=>'application.vendor.artem-frolov.yii-sass.SassHandler',
+            'class'=>'sass.SassHandler',
             'enableCompass'=>true,
         ],
         'bootstrap'=>[
-            'class'=>'bootstrap.components.Bootstrap',
+            'class'=>'ext.bootstrap.components.Bootstrap',
         ],
         'mail'=>[
             'class'=>'ext.mail.YiiMail',
