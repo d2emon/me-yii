@@ -21,9 +21,11 @@ templates/script.js
 	<header>
 		<h1>{{ html.link(App.name, '/') }}</h1>
         {% if (this.breadcrumbs) %}
+            {#
             {{ this.widget('zii.widgets.CBreadcrumbs', {
                 'links': this.breadcrumbs,
             }) }}
+            #}
             <!-- breadcrumbs -->
         {% endif %}
 

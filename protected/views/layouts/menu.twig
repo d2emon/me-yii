@@ -20,8 +20,8 @@ load("./images/mainmenu/", "currentsector");load("./images/mainmenu/", "localmap
             {{ void(this.widget('zii.widgets.CMenu',{
                 'id':    'global-menu',
                 'items': [
-                    {'label': 'Help',        'url': {0:'/site/page', 'view':'help'},                                  },
-                    {'label': 'Preferences', 'url': [  '/site/contact'            ], 'visible': not App.user.isGuest},
+                    {'label': 'Help',        'url': {0:'/site/page', 'view':'help'},                                },
+                    {'label': 'Preferences', 'url': [  '/user/preferences'        ], 'visible': not App.user.isGuest},
                 ],
             })) }}
         </div>
