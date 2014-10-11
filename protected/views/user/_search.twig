@@ -1,0 +1,29 @@
+<div class="wide form">
+
+{% set form = this.beginWidget('CActiveForm', {
+    'action': App.createUrl(this.route),
+    'method': 'get',
+}) %}
+
+	<div class="row">
+		{{ form.label(model,'user_id') }}
+        {{ form.textField(model,'user_id') }}
+	</div>
+
+	<div class="row">
+        {{ form.label(model,'username') }}
+        {{ form.textField(model,'username',{'size':8,'maxlength':8}) }}
+	</div>
+
+	<div class="row">
+        {{ form.label(model,'email') }}
+        {{ form.textField(model,'email',{'size':60,'maxlength':128}) }}
+	</div>
+
+	<div class="row buttons">
+		{{ html.submitButton('Search') }}
+	</div>
+
+{{ void(this.endWidget()) }}
+</div>
+<!-- search-form -->

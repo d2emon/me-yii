@@ -1,0 +1,10 @@
+<h1>View User #{{ model.user_id }}</h1>
+
+{{ void(this.widget('zii.widgets.CDetailView', {
+	'data':       model,
+    'attributes': [
+        'user_id',
+        'username',
+        'email',
+    ],
+})) }}

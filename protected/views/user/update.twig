@@ -1,0 +1,122 @@
+    {# bgColor=#993300 #}
+    {# border=0 cellPadding=5 cellSpacing=1 width=450 #}
+    <div class="box info">
+        <h2>Preferences</h2>
+        {# class=clsHedTxt id=red1 #}
+        <div class="form">
+            {# class=clsNrmTxt #}
+
+            {%  set form = this.beginWidget('bootstrap.widgets.TbActiveForm', {
+                'id':                   'password-form',
+                'type':                 'horizontal',
+                'enableAjaxValidation': true,
+                'clientOptions':        {
+                    'validateOnChange': true,
+                },
+            }) %}
+            {{ form.passwordFieldRow(model, 'password', {'value': ''}) }} {# New password: #}
+            {{ form.passwordFieldRow(model, 'verify',   {'value': ''}) }} {# Verify: #}
+            {{ void(this.widget('bootstrap.widgets.TbButton', {
+                'buttonType': 'submit',
+                'type':       'primary',
+                'label':      'Submit New Password',
+            })) }}
+
+            {{ void(this.endWidget()) }}
+
+            {%  set form = this.beginWidget('bootstrap.widgets.TbActiveForm', {
+                'id':                   'email-form',
+                'type':                 'horizontal',
+                'enableAjaxValidation': true,
+                'clientOptions':        {
+                    'validateOnChange': true,
+                },
+            }) %}
+
+            {{ form.textFieldRow(model, 'email',   {'value': ''}) }} {# Email: #}
+            {{ void(this.widget('bootstrap.widgets.TbButton', {
+                'buttonType': 'submit',
+                'type':       'primary',
+                'label':      'Submit New Email',
+            })) }}
+            {{ void(this.endWidget()) }}
+
+            {% if model.player %}
+                {%  set form = this.beginWidget('bootstrap.widgets.TbActiveForm', {
+                'id':                   'preferences-form',
+                'type':                 'horizontal',
+                'enableAjaxValidation': true,
+                'clientOptions':        {
+                'validateOnChange': true,
+                },
+                }) %}
+                <br>
+                Following a successful purchase that leaves your merchant with no open cargo holds, which screen do you
+                want to appear?  This value also determines the screen that appears after taking off from a planet and
+                jumping to a new sector.<br>
+                {{ form.radioButtonListRow(model, 'post_trade_screen', [
+                    "&nbsp;Local Map<br>",
+                    "&nbsp;Current Sector<br><br>",
+                ]) }}
+                {# local_map #}
+                {# current_sector #}
+
+                Adjust your ship scanner to ignore the presence of Newbies when displaying the local map.<br>
+                {{ form.radioButtonListRow(model, 'ignore_newbie', [
+                    "&nbsp;Yes<br>",
+                    "&nbsp;No<br><br>",
+                ]) }}
+
+                Participate in ship to ship combat when not directly attacked?<br>
+                {{ form.radioButtonListRow(model, 'group_combat_ships', [
+                    "&nbsp;Yes<br>",
+                    "&nbsp;No<br><br>",
+                ]) }}
+
+                Defend forces when not directly attacked?<br>
+                {{ form.radioButtonListRow(model, 'group_combat_forces', [
+                    "&nbsp;Yes<br>",
+                    "&nbsp;No<br><br>",
+                ]) }}
+
+                Participate in group attacks on planets?<br>
+                {{ form.radioButtonListRow(model, 'group_combat_planets', [
+                    "&nbsp;Yes<br>",
+                    "&nbsp;No<br><br>",
+                ]) }}
+
+                Local map size<br>
+                {{ form.radioButtonListRow(model, 'group_map_size', [
+                    "&nbsp;5 X 5<br>",
+                    "&nbsp;7 x 7<br><br>",
+                ]) }}
+
+                {{ void(this.widget('bootstrap.widgets.TbButton', {
+                    'buttonType': 'submit',
+                    'type':       'primary',
+                    'label':      'Update',
+                })) }}
+                {{ void(this.endWidget()) }}
+
+            {% endif %}
+
+            {#
+            if ( $error ) {
+                $db = new ME_DB_Xml;
+                $db->add_parameter("title", "Error");
+
+                if ($error == 1) {
+                    $db->add_parameter("message", "Please fill out all of the fields.");
+                } elseif ($error == 2) {
+                    $db->add_parameter("message", "Your password was not successfully verified.");
+                } elseif ($error == 3) {
+                    $db->add_parameter("message", "Password length limit is 10 characters.");
+                } elseif ($error == 4) {
+                    $db->add_parameter("message", "Illegal character in submitted.");
+                }
+
+                echo $db->get_transform("./xslt/message_box.xslt", "");
+            }
+            #}
+        </div>
+    </div>

@@ -27,6 +27,8 @@
  */
 class User extends CActiveRecord
 {
+    public $player = null;
+
 	/**
 	 * @return string the associated database table name
 	 */

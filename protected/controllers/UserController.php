@@ -21,6 +21,7 @@ class UserController extends Controller
 	public function accessRules()
 	{
 		return [
+            /*
             [
                 'allow',
                 'actions' => ['create', 'captcha', 'login', 'validate'],
@@ -28,7 +29,7 @@ class UserController extends Controller
             ],
             [
                 'allow',
-                'actions' => ['index', 'view', 'update', 'logout'],
+                'actions' => ['view', 'preferences', 'logout'],
                 'users'   => ['@'],
             ],
             [
@@ -40,6 +41,7 @@ class UserController extends Controller
                 'deny',
                 'users' => ['*'],
             ],
+            */
         ];
 	}
 
@@ -64,8 +66,10 @@ class UserController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate()
+    /*public function actionCreate()
     {
+        $this->pageTitle = "New User";
+
         $model = new RegisterForm('insert');
         $this->performAjaxValidation($model);
         if(isset($_POST['RegisterForm']))
@@ -90,10 +94,12 @@ class UserController extends Controller
         $this->render('create',[
             'model'=>$model,
         ]);
-    }
+    }*/
 
-    public function actionValidate()
+    /*public function actionValidate()
     {
+        $this->pageTitle = "New User";
+
         $model = new ValidateForm;
         if(isset($_POST['ValidateForm']))
         {
@@ -106,13 +112,14 @@ class UserController extends Controller
             'model' => $model,
         ]);
 
-    }
+    }*/
 
     /**
      * Displays the login page
      */
-    public function actionLogin()
+    /*public function actionLogin()
     {
+        $this->pageTitle = "Login";
         $this->randomBack();
 
         $model = new LoginForm;
@@ -128,27 +135,79 @@ class UserController extends Controller
         $this->render('login',[
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Logs out the current user and redirect to homepage.
      */
-    public function actionLogout()
+    /*public function actionLogout()
     {
         Yii::app()->user->setFlash('old_name', Yii::app()->user->name);
         Yii::app()->user->logout();
         Yii::app()->user->setFlash('sys_msg', '//popups/_info_logout');
         $this->redirect(Yii::app()->homeUrl);
-    }
+    }*/
 
     /**
-     * Lists all models.
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
      */
-    public function actionIndex()
+    public function actionPreferences()
     {
-        $dataProvider = new CActiveDataProvider('User');
-        $this->render('index', [
-            'dataProvider' => $dataProvider,
+        $this->pageTitle = "Preferences";
+        $this->layout    = "//layouts/menu";
+
+        // sess->register("player_dead")
+        // sess->register("user_ignore_newbie")
+
+        // include("./lib/player_config.php")
+
+        // player_config = new ME_Player_config
+        // player_config->get_player_config($player_id)
+
+        // if player dead, send to post-death screen
+        /*
+        if ($player_dead)
+        {
+            $this->redirect('death');
+        }
+        */
+
+        $model = $this->loadUser(Yii::app()->user->id);
+
+        $this->performAjaxValidation($model);
+
+        if(isset($_POST['PasswordForm']))
+        {
+            $model->setScenario('changePassword');
+            $model->attributes = $_POST['PasswordForm'];
+            $model->save();
+        }
+
+        if(isset($_POST['EmailForm']))
+        {
+            $model->setScenario('changeEmail');
+            $model->attributes = $_POST['EmailForm'];
+            $model->save();
+        }
+
+        if(isset($_POST['Player']))
+        {
+            //$model->attributes=$_POST['User'];
+            /*
+            post_trade_screen
+            ignore_newbie
+            group_combat_forces
+            group_combat_planets
+            group_combat_ships
+            map_size
+            */
+            $model->save();
+        }
+
+        $this->render('update', [
+            'model'=>$model,
         ]);
     }
 
@@ -158,7 +217,7 @@ class UserController extends Controller
     public function actionAdmin()
     {
         $model = new User('search');
-        $model->unsetAttributes();  // clear any default values
+        $model->unsetAttributes();
         if(isset($_GET['User']))
             $model->attributes=$_GET['User'];
 
@@ -171,36 +230,13 @@ class UserController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id = 0)
 	{
+        if(!$id)
+            $id = Yii::app()->user->id;
+
 		$this->render('view', [
             'model' => $this->loadUser($id),
-        ]);
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model = $this->loadUser($id);
-
-		$this->performAjaxValidation($model);
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-            {
-
-                $this->redirect(['view','id'=>$model->user_id]);
-
-            }
-		}
-
-		$this->render('update', [
-            'model'=>$model,
         ]);
 	}
 
@@ -215,6 +251,10 @@ class UserController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : ['admin']);
 	}
+
+    /*
+     * Controller utils
+     */
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

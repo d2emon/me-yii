@@ -1,0 +1,13 @@
+<div class="view">
+	<b>{{ data.getAttributeLabel('user_id') }}:</b>
+	{{ html.link(data.user_id, {0:'view', 'id':data.user_id}) }}
+    <br />
+
+	<b>{{ data.getAttributeLabel('username') }}:</b>
+	{{ data.username }}
+	<br />
+
+	<b>{{ data.getAttributeLabel('email') }}:</b>
+    {{ data.email }}
+	<br />
+</div>
