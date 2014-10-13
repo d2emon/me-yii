@@ -1,9 +1,13 @@
 composer.phar
 composer.lock
-vendor/
 .htaccess
 .idea/
-assets/
-protected/runtime/
 merchempires/
 temp/
+assets/*
+!assets/.gitignore
+protected/runtime/*
+!protected/runtime/.gitignore
+protected/data/*.db
+protected/vendor/*
+themes/classic/views/

@@ -1,0 +1,252 @@
+$txtColor:  #FFFFFF;
+$bgColor:   #000000;
+$headColor: #333333;
+$menuColor: #000033;
+
+$sideMargin:   25px;
+$sideWidth:    100px;
+$contentWidth: 650px;
+$bodyWidth:    $contentWidth + 2*($sideWidth + $sideMargin);
+
+.no-margin
+{
+  margin:  0;
+  padding: 0;
+}
+
+.margin-center
+{
+  margin:  0 auto;
+  padding: 0;
+}
+
+// Page elements
+body
+{
+  @extend .margin-center;
+  color:            $txtColor;
+  background-color: $bgColor;
+  font:             normal 10pt Arial,Helvetica,sans-serif;
+  width:            $bodyWidth;
+}
+
+header
+{
+  @extend .no-margin;
+  background-color: $headColor;
+  background-image: url("/web/images/header_bg.png");
+  height:           50px;
+  h1
+  {
+    margin:    0;
+    padding:   10px 20px;
+    font-size: 200%;
+    a
+    {
+      color: $txtColor;
+    }
+  }
+}
+
+footer
+{
+  margin:     10px 20px;
+  padding:    10px;
+  font-size:  0.8em;
+  text-align: center;
+  border-top: 1px solid #C9E0ED;
+}
+
+aside
+{
+  float: left;
+  width: $sideWidth;
+}
+
+// Background images
+.bg0
+{
+  min-height: 500px;
+  background-image:  url("/web/images/createbg.gif");
+  background-repeat: no-repeat;
+}
+
+.bg1
+{
+  @extend .bg0;
+  background-image: url(/web/images/loginback.jpg);
+}
+
+.bg2
+{
+  @extend .bg0;
+  background-image: url(/web/images/loginback_1.jpg);
+}
+
+.bg3
+{
+  @extend .bg0;
+  background-image: url(/web/images/loginback_2.jpg);
+}
+
+.bg4
+{
+  @extend .bg0;
+  background-image: url(/web/images/loginback_3.jpg);
+}
+
+// Styles
+time
+{
+  display:    block;
+  font-size:  small;
+  text-align: center;
+}
+
+a
+{
+  color:           #ffff00;
+  text-decoration: none;
+}
+
+#wrapper
+{
+  margin: 5px;
+  min-height: 400px;
+}
+
+#content
+{
+  @extend .margin-center;
+  width: $contentWidth;
+  min-height: 200px;
+}
+
+.form-horizontal .control-group label
+{
+  display: inline-block;
+  width:   145px;
+}
+
+.form-horizontal .control-group .controls
+{
+  display: inline-block;
+}
+
+.form-horizontal button
+{
+  margin: 0 0 0 145px;
+  width:  153px;
+}
+
+#cap
+{
+  display: inline-block;
+  width:   145px;
+  img
+  {
+    display: block;
+  }
+}
+
+#mainmenu
+{
+  margin:           5px 15px;
+  padding:          26px 0;
+  border:           #003399 solid 1px;
+  border-radius:    1px;
+  background-color: $menuColor;
+  ul
+  {
+    margin:  0 0 5px 0;
+    padding: 0;
+    li
+    {
+      display: block;
+      margin:  0 -15px;
+      padding: 0;
+      a
+      {
+        display:          block;
+        margin:           3px;
+        padding:          1px;
+        width:            $sideWidth - 10;
+        height:           16px;
+        border:           #003399 solid 1px;
+        border-radius:    3px;
+        font-size:        12px;
+        font-weight:      bold;
+        color:            #ffcc00;
+        text-transform:   uppercase;
+        text-align:       center;
+        background-color: $menuColor;
+      }
+      a:hover
+      {
+        border:           #0099cc solid 1px;
+        background-color: #003366;
+      }
+
+    }
+    li.active a
+    {
+      border:           #ffcc00 solid 1px;
+      background-color: #003366;
+    }
+  }
+}
+
+.box
+{
+  margin:           0 auto 20px auto;
+  border:           #993300 solid 2px;
+  color:            #cccccc;
+  background-color: $bgColor;
+  .text, .form
+  {
+    border: #993300 solid 1px;
+    padding: 5px;
+  }
+  h2
+  {
+    @extend .text;
+    display:          block;
+    margin:           0;
+    padding:          5px 15px;
+    border:           #993300 solid 1px;
+    color:            $txtColor;
+    background-color: #330000;
+  }
+  h3
+  {
+    margin:      0 0 15px 0;
+    font-size:   medium;
+    font-weight: bold;
+  }
+}
+
+.side .box
+{
+  float:  left;
+  margin: 0 2px;
+  width:  ($contentWidth / 2) - 8;
+  .text
+  {
+    min-height: 120px;
+  }
+}
+
+.error h2
+{
+  font-size: medium;
+}
+
+.info h2
+{
+  font-size: large;
+}
+
+.hint
+{
+  color: #cccccc;
+}
