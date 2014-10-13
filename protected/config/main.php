@@ -13,7 +13,7 @@ Yii::setPathOfAlias('twig',              'protected/vendor/twig/twig');
 return [
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Merchant Empires',
-    'theme'=>'basic',
+    'theme'=>'classic',
 
     'preload'=>['log'],
 

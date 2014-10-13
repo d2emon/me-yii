@@ -1,0 +1,67 @@
+{#
+$this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Login");
+$this->breadcrumbs=array(
+	UserModule::t("Login"),
+);
+#}
+{#
+<?php if(Yii::app()->user->hasFlash('loginMessage')): ?>
+
+<div class="success">
+	<?php echo Yii::app()->user->getFlash('loginMessage'); ?>
+</div>
+
+<?php endif; ?>
+#}
+<div class="side">
+    <div class="box info">
+        <h2>Create a New User{#<?php echo UserModule::t("Login"); ?>#}</h2>
+        <div class="text">
+            <p>If you are new to Merchant Empires you may create a user and join the fun.</p>
+            <p>{{  html.link('Create User',   ['user/create'  ]) }}&nbsp;&nbsp;
+                {{ html.link('Validate User', ['user/validate']) }}</p>
+            {#<? CHtml::link(UserModule::t("Register"),Yii::app()->getModule('user')->registrationUrl); ?> | <?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>#}
+        </div>
+    </div>
+
+    <div class="box info">
+        <h2>Log in</h2>
+            <div class="text form">
+                {% set form = this.beginWidget('CActiveForm', {
+                    'id':          'login-form',
+                    'htmlOptions': {
+                        'class': 'form-horizontal',
+                    },
+                    'enableAjaxValidation': true,
+                    'clientOptions': {
+                        'validationOnSubmit': true
+                    }
+                }) %}
+                    {#<? UserModule::t("Please fill out the following form with your login credentials:"); ?>#}
+                    {#<? UserModule::t('Fields with <span class="required">*</span> are required.'); ?>#}
+                    {{ html.errorSummary(model) }}
+                    <div class="control-group">
+                        {{ form.label(model,     'username') }}
+                        {{ form.textField(model, 'username', {'value': ''}) }}
+                    </div>
+
+                    <div class="control-group">
+                        {{ form.label(model,         'password') }}
+                        {{ form.passwordField(model, 'password', {'value': ''}) }}
+                    </div>
+
+                    <div class="row rememberMe">
+                        {{ form.label(model,    'rememberMe') }}
+                        {{ form.checkBox(model, 'rememberMe') }}
+                    </div>
+
+                    <div class="row submit">
+                        {{ html.submitButton('Login') }}
+                        {#UserModule::t("Login")#}
+                    </div>
+                {{ void(this.endWidget()) }}
+            </div>
+        </div>
+        <!-- form -->
+    </div>
+</div>
